@@ -1,0 +1,5 @@
+interface:
+  display_name: "Vibe PR Summary Writer"
+  short_description: "Create accurate, reviewer-ready PR summaries from AI-assisted development work"
+  default_prompt: "Use $vibe-pr-summary-writer to inspect this change, classify the PR type, and produce the appropriate draft or final PR description with evidence and explicit non-goals."
+

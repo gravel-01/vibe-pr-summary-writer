@@ -21,6 +21,8 @@ Do not silently upgrade `Reported` to `Verified`.
 
 ## Repository Scope Audit
 
+Before calculating the PR range, confirm the target branch. Do not assume a branch based only on names such as `dev`, `main`, or `master`. The remote default branch is a candidate, not proof of the intended PR target.
+
 For a final description, verify from the target branch merge-base:
 
 ```bash
@@ -120,4 +122,3 @@ Use only evidence-backed statuses:
 - `Blocked`: attempted but prevented by an environment or dependency issue.
 
 Include relevant residual warnings without presenting them as new failures when they predate the PR.
-

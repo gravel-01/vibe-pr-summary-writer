@@ -4,6 +4,8 @@
 
 - Is the requirement stated in product/user terms before implementation details?
 - Is the requirement source handled honestly?
+- Was the target branch provided or explicitly confirmed rather than assumed from a branch name?
+- If target discovery found multiple plausible branches, was the user asked before calculating the diff?
 - Is one primary PR type selected?
 - Are secondary types limited to evidence modules rather than full duplicate templates?
 - Does the commit section contain proposed messages only, without invented hashes?
@@ -17,6 +19,7 @@
 
 - Was repository context collected again after commits were created?
 - Are source branch, target branch, and merge-base correct?
+- Was the target branch confirmed rather than inferred solely from the remote default branch?
 - Does the commit table contain real commit IDs and final messages?
 - Does the final diff match the described scope?
 - Were obsolete draft phrases such as “planned”, “to be committed”, or “expected” removed?
@@ -41,4 +44,3 @@ Before delivery, answer:
 5. Is there any unrelated change that should be split or called out?
 
 If any answer is unclear, revise before delivering.
-

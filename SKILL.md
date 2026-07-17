@@ -37,7 +37,23 @@ Produce two distinct artifacts when the workflow spans commit creation:
 
 Do not update a draft by merely inserting hashes. Before writing the final version, collect repository evidence again from the actual committed state.
 
-### 2. Collect evidence
+### 2. Resolve the target branch
+
+Do not assume `origin/dev`, `origin/main`, `main`, or `master`.
+
+- If the user provides the target branch, verify that it exists and use it.
+- Otherwise inspect the current branch, upstream, remote default branch, and remote branch candidates.
+- Treat the remote default branch as a candidate, not proof of the intended PR target.
+- Use existing PR metadata or explicit repository conventions when available.
+- If more than one target remains plausible, ask the user before calculating the PR diff.
+
+Run target discovery without selecting a target:
+
+```bash
+scripts/collect-pr-context.sh
+```
+
+### 3. Collect evidence
 
 When inside a Git repository, run the read-only collector:
 
@@ -60,7 +76,7 @@ Also collect test output, manual verification, API examples, data storage detail
 
 If this is not a Git repository, fall back to user-provided requirements, changed-file lists, tests, and verification evidence. State that commit and target-branch evidence was unavailable.
 
-### 3. Resolve the requirement source
+### 4. Resolve the requirement source
 
 Requirement documentation is optional:
 
@@ -76,7 +92,7 @@ Never claim to have read an inaccessible document. When sources conflict, follow
 4. Development notes and discussion history.
 5. AI inference, clearly labeled as an assumption.
 
-### 4. Classify the PR
+### 5. Classify the PR
 
 Choose one primary type and at most two secondary types:
 
@@ -91,7 +107,7 @@ Choose one primary type and at most two secondary types:
 
 Read [references/pr-type-routing.md](references/pr-type-routing.md) and load only the sections required by the selected types.
 
-### 5. Choose language and template
+### 6. Choose language and template
 
 - For Chinese output, read [references/templates-zh.md](references/templates-zh.md).
 - For English output, read [references/templates-en.md](references/templates-en.md).
@@ -103,7 +119,7 @@ Use one of three output modes:
 - Standard PR description: concise MR/PR page content.
 - Deep investigation description: adds SQL, logs, formulas, root causes, or follow-up questions.
 
-### 6. Add evidence and examples
+### 7. Add evidence and examples
 
 Read [references/evidence-and-safety.md](references/evidence-and-safety.md) when the PR includes persistence, logs, SQL, screenshots, background jobs, AI behavior, or potentially sensitive data.
 
@@ -117,7 +133,7 @@ An example must explain:
 
 Do not require examples for private implementation details that do not create a new usage or extension surface.
 
-### 7. Check PR scope
+### 8. Check PR scope
 
 Before finalizing, verify:
 
@@ -130,7 +146,7 @@ Before finalizing, verify:
 
 If the PR combines independent feature, refactor, bugfix, and cleanup themes, recommend splitting or using stacked PRs. Do not split mechanically when the changes are inseparable.
 
-### 8. Write and validate the result
+### 9. Write and validate the result
 
 Group changes by commit or functional module. Do not list every file unless the user asks for a full file audit.
 
@@ -168,4 +184,3 @@ Default to a reviewer reading budget of 2-3 minutes:
 - State persistence, compatibility, and non-goals precisely.
 
 The final description must reflect the final repository state, not the development plan.
-

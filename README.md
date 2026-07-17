@@ -41,7 +41,33 @@ git clone --depth 1 \
 
 ## 使用
 
+### 先确定 target branch
+
+不同项目可能使用 `main`、`master`、`dev`、`develop` 或 release branch 作为 PR target，因此不要默认使用 `origin/dev`。
+
+推荐先让 skill 检查仓库上下文：
+
+```text
+使用 $vibe-pr-summary-writer，先检查当前分支、upstream、远端默认分支和远端分支候选。
+如果无法唯一确认这次 PR 的 target branch，请先询问我，不要直接生成 diff。
+```
+
+也可以运行：
+
+```bash
+scripts/collect-pr-context.sh
+```
+
+无参数时，脚本只输出 target branch 候选，不会擅自选择。确认 target 后再传入目标分支。
+
 提交前生成草稿：
+
+```text
+使用 $vibe-pr-summary-writer，先确认本次 PR 的 target branch，
+生成 pr-description-draft.md 和 commit 拆分计划。不要执行 commit 或 push。
+```
+
+例如当前项目明确以 `origin/dev` 为 target 时：
 
 ```text
 使用 $vibe-pr-summary-writer，基于 origin/dev 检查当前改动，
@@ -96,13 +122,21 @@ vibe-pr-summary-writer/
 
 ## 只读上下文采集
 
+先发现 target branch 候选：
+
+```bash
+scripts/collect-pr-context.sh
+```
+
+确认 target 后采集完整 PR 上下文，例如：
+
 ```bash
 scripts/collect-pr-context.sh origin/dev
 ```
 
 脚本只读取：
 
-- 当前分支和 target branch。
+- 当前分支、upstream、远端默认分支和 target branch 候选。
 - merge-base。
 - PR commit 列表。
 - changed files 和 diff stat。
@@ -110,6 +144,8 @@ scripts/collect-pr-context.sh origin/dev
 - `git diff --check` 结果。
 
 脚本不会 stage、commit、push 或修改仓库。
+
+远端默认分支只是候选，不一定是团队实际使用的 PR target。脚本和 skill 都不会仅凭默认分支自动下结论。
 
 ## 更新
 

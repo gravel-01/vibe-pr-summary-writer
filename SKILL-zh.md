@@ -39,7 +39,23 @@ description: 在 AI 辅助开发或 vibe coding 后，生成面向 reviewer 的 
 
 最终版不能只在草稿里补 hash。commit 完成后，必须从实际仓库状态重新采集证据，再生成最终版。
 
-### 2. 收集证据
+### 2. 确认 target branch
+
+不要默认使用 `origin/dev`、`origin/main`、`main` 或 `master`。
+
+- 用户明确提供 target branch 时，先验证分支存在，再使用它。
+- 用户未提供时，检查当前分支、upstream、远端默认分支和远端分支候选。
+- 远端默认分支只能作为候选，不能证明它就是本次 PR target。
+- 如果存在已有 PR 信息或明确仓库约定，可以作为判断依据。
+- 如果仍有多个合理候选，必须先询问用户，再计算 PR diff。
+
+可以先运行无参数发现模式：
+
+```bash
+scripts/collect-pr-context.sh
+```
+
+### 3. 收集证据
 
 如果当前目录是 Git 仓库，运行只读采集脚本：
 
@@ -62,7 +78,7 @@ git diff --check <merge-base>..HEAD
 
 如果当前不是 Git 仓库，则退化为使用用户需求、改动文件列表、测试和验收证据，并明确说明无法获取 commit 和 target branch 证据。
 
-### 3. 处理需求来源
+### 4. 处理需求来源
 
 需求文档是可选信息：
 
@@ -78,7 +94,7 @@ git diff --check <merge-base>..HEAD
 4. 开发记录和讨论历史。
 5. AI 推断，并明确标记为假设。
 
-### 4. 识别 PR 类型
+### 5. 识别 PR 类型
 
 选择一个主类型，最多两个辅助类型：
 
@@ -93,7 +109,7 @@ git diff --check <merge-base>..HEAD
 
 读取 [references/pr-type-routing.md](references/pr-type-routing.md)，只加载所选类型需要的部分。
 
-### 5. 选择语言和模板
+### 6. 选择语言和模板
 
 - 中文输出读取 [references/templates-zh.md](references/templates-zh.md)。
 - 英文输出读取 [references/templates-en.md](references/templates-en.md)。
@@ -105,7 +121,7 @@ git diff --check <merge-base>..HEAD
 - 标准 PR 描述：适合 PR/MR 页面，完整但简洁。
 - 深度排查描述：增加 SQL、日志、公式、根因和后续问题。
 
-### 6. 补充证据和 Example
+### 7. 补充证据和 Example
 
 如果 PR 涉及数据持久化、日志、SQL、截图、后台任务、AI 行为或敏感信息，读取 [references/evidence-and-safety.md](references/evidence-and-safety.md)。
 
@@ -119,7 +135,7 @@ Example 必须说明：
 
 私有实现细节如果没有形成新的使用或扩展方式，不强制写 example。
 
-### 7. 检查 PR 范围
+### 8. 检查 PR 范围
 
 最终生成前确认：
 
@@ -132,7 +148,7 @@ Example 必须说明：
 
 如果 PR 混合了互相独立的新功能、重构、Bugfix 和清理，应建议拆分或使用 stacked PR；如果拆分会产生不可运行的中间状态，则保留在一个 PR 中。
 
-### 8. 写作和校验
+### 9. 写作和校验
 
 默认按 commit 或功能模块组织改动。除非用户明确要求完整文件审计，否则不要平铺所有文件。
 

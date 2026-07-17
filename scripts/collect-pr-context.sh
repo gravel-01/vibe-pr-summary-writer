@@ -4,15 +4,51 @@ set -euo pipefail
 
 target=${1:-}
 
-if [[ -z "$target" ]]; then
-  echo "Usage: $0 <target-branch>" >&2
-  echo "Example: $0 origin/dev" >&2
-  exit 2
-fi
-
 if [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null || true)" != "true" ]]; then
   echo "Error: current directory is not inside a Git worktree." >&2
   exit 2
+fi
+
+current_branch=$(git branch --show-current)
+upstream=$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' 2>/dev/null || true)
+
+section() {
+  printf '\n## %s\n' "$1"
+}
+
+if [[ -z "$target" ]]; then
+  section "Target Discovery"
+  printf 'current_branch=%s\n' "${current_branch:-DETACHED_HEAD}"
+  printf 'upstream=%s\n' "${upstream:-NONE}"
+
+  echo "remote_default_candidates:"
+  remote_defaults=$(
+    git for-each-ref \
+      --format='%(refname:short) %(symref:short)' \
+      refs/remotes/ \
+      | awk '$1 ~ /\/HEAD$/ && $2 != "" { print "  " $2 }'
+  )
+  if [[ -n "$remote_defaults" ]]; then
+    printf '%s\n' "$remote_defaults"
+  else
+    echo "  NONE"
+  fi
+
+  echo "remote_branch_candidates:"
+  remote_branches=$(
+    git for-each-ref --format='  %(refname:short)' refs/remotes/ \
+      | awk '$0 !~ /\/HEAD$/'
+  )
+  if [[ -n "$remote_branches" ]]; then
+    printf '%s\n' "$remote_branches"
+  else
+    echo "  NONE"
+  fi
+
+  printf '\ntarget_status=UNRESOLVED\n'
+  echo "Confirm the intended PR target, then pass it explicitly."
+  echo "Example: $0 origin/dev"
+  exit 0
 fi
 
 if ! git rev-parse --verify "${target}^{commit}" >/dev/null 2>&1; then
@@ -21,13 +57,7 @@ if ! git rev-parse --verify "${target}^{commit}" >/dev/null 2>&1; then
 fi
 
 merge_base=$(git merge-base "$target" HEAD)
-current_branch=$(git branch --show-current)
 head_commit=$(git rev-parse HEAD)
-upstream=$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' 2>/dev/null || true)
-
-section() {
-  printf '\n## %s\n' "$1"
-}
 
 section "Repository"
 printf 'current_branch=%s\n' "${current_branch:-DETACHED_HEAD}"

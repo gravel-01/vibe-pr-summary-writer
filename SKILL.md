@@ -125,6 +125,8 @@ Read [references/evidence-and-safety.md](references/evidence-and-safety.md) when
 
 Read [references/examples.md](references/examples.md) when the PR adds a public API, configuration, template mechanism, abstraction, workflow, data structure, or extension point.
 
+Read [references/mermaid-diagrams.md](references/mermaid-diagrams.md) when a new or changed feature spans multiple components, stages, states, asynchronous steps, fallbacks, or agent handoffs. Add a concise Mermaid diagram only when it materially reduces reviewer effort. Do not add one to every PR, and do not put Mermaid in Git commit messages.
+
 An example must explain:
 
 1. When to use the capability.

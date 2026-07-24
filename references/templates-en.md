@@ -91,6 +91,26 @@ Requirement doc: [include only when available]
 
 Keep only relevant rows in the data/API/entry-point table. Remove the table for simple PRs.
 
+## Mermaid Overall Flow Module (Optional)
+
+Include this only when a cross-component, multi-stage, asynchronous, stateful, fallback, or agent-handoff flow is hard to explain with a short list. Place it after “What This PR Does” and before “Commit Records” in most descriptions.
+
+````markdown
+## Overall Flow
+
+```mermaid
+flowchart TD
+    A["User starts the action"] --> B["API validates the request"]
+    B --> C["Persist a new version"]
+    C --> D["Executor loads the active version"]
+    D --> E{"Execution succeeds?"}
+    E -->|"Yes"| F["Store result and notify user"]
+    E -->|"No"| G["Record failure and apply fallback"]
+```
+````
+
+Every node and edge must be supported by the final diff or verification evidence. Omit the diagram for simple PRs.
+
 ## Bugfix / Data Investigation Module
 
 ````markdown
@@ -232,4 +252,3 @@ Not included in this round: XXX.
 ````
 
 Keep it to 4-8 lines. Do not include the full commit table in a chat update.
-

@@ -1,5 +1,14 @@
 # Vibe PR Summary Writer
 
+## Skill 元信息
+
+| 项目 | 内容 |
+|---|---|
+| 调用名 | `$vibe-pr-summary-writer` |
+| 简单描述 | 基于真实需求、commit、diff、测试和日志生成 reviewer-ready PR/MR 描述与简短汇报 |
+| 主要产物 | 提交前草稿、提交后最终版、4-8 行 mentor 汇报 |
+| 当前边界 | 默认只读，不自动 commit、push、创建 PR/MR 或上传截图 |
+
 一个面向 AI 辅助开发和 vibe coding 的 PR/MR 总结 skill。
 
 它会根据真实需求、commit、diff、测试、日志、截图和人工验收，生成 reviewer 友好的 PR 描述，并明确说明实现范围、证据、使用示例和未完成边界。
@@ -11,6 +20,7 @@
 - 根据 PR 类型选择不同模板：新功能、抽象、Bug 排查、计算口径、调度、AI 编排、前端和清理。
 - 灵活处理需求文档：可读则总结，不可读则保留链接，没有文档则省略该模块。
 - 对新增 API、模板、配置和扩展点生成 example。
+- 对跨模块、多阶段、异步、fallback 或 Agent handoff 的新功能按需生成 Mermaid review 图。
 - 明确数据持久化、验收路径、测试结果、风险和未完成内容。
 - 支持中文和英文 PR 模板。
 - 提供只读 Git 上下文采集脚本。
@@ -111,6 +121,7 @@ vibe-pr-summary-writer/
 │   ├── evidence-and-safety.md
 │   ├── examples.md
 │   ├── final-checklist.md
+│   ├── mermaid-diagrams.md
 │   ├── pr-type-routing.md
 │   ├── templates-en.md
 │   └── templates-zh.md

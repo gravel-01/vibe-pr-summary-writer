@@ -14,12 +14,12 @@ Example: a scheduled notification feature can use `Background job / scheduler` a
 
 | PR Type | Use When | Required Narrative | Required Evidence |
 |---|---|---|---|
-| New feature | Adds a user-visible feature, page, API, or workflow | User scenario, completed scope, usage path, non-goals | Page/API entry, verification path, screenshots when useful |
-| Abstraction / extension | Adds registry, template, executor, service, interface, or plugin point | Why abstraction is needed, boundary, compatibility, extension path | Example, default behavior, fallback, persistence |
+| New feature | Adds a user-visible feature, page, API, or workflow | User scenario, completed scope, usage path, non-goals | Page/API entry, verification path, Mermaid for complex flows, screenshots when useful |
+| Abstraction / extension | Adds registry, template, executor, service, interface, or plugin point | Why abstraction is needed, boundary, compatibility, extension path | Example, default behavior, fallback, persistence, Mermaid when caller-to-runtime flow is complex |
 | Bugfix / data investigation | Fixes anomalies, inconsistent data, sync gaps, or suspicious historical results | Symptom -> conclusion -> root causes -> fixed -> not fixed -> follow-up | SQL, logs, data screenshots, regression tests |
 | Calculation methodology | Changes return, PnL, NAV, benchmark, ranking, or statistical logic | Data source, formula, selection rule, fallback, limitations | Formula, units, precision, date alignment, empty state tests |
-| Background job / scheduler | Adds worker, timed trigger, automated execution, notification, or retry behavior | Trigger chain, success path, failure path, next-run behavior | Logs, execution records, failure test, notification evidence |
-| AI / prompt / orchestration | Adds AI suggestions, prompt plans, agent ordering, or machine-generated patches | Input context, output contract, validation, human boundary, non-determinism | Prompt snapshot, JSON schema, logs, run summary, fallback |
+| Background job / scheduler | Adds worker, timed trigger, automated execution, notification, or retry behavior | Trigger chain, success path, failure path, next-run behavior | Logs, execution records, failure test, notification evidence, Mermaid when the chain branches |
+| AI / prompt / orchestration | Adds AI suggestions, prompt plans, agent ordering, or machine-generated patches | Input context, output contract, validation, human boundary, non-determinism | Prompt snapshot, JSON schema, logs, run summary, fallback, Mermaid for agent handoffs when useful |
 | Frontend UX | Mainly changes UI, interactions, layout, chart, dialog, or notification | User path, important states, responsive/theme behavior | Screenshots, browser verification, empty/error/loading states |
 | Cleanup / convergence | Removes old pages, APIs, components, flags, or dead code | Removal reason, removed surface, replacement, compatibility | Reference scan, final diff, tests for replacement path |
 
@@ -89,4 +89,3 @@ Recommend separate or stacked PRs when:
 - Old commits appear only because of a deleted or stacked PR.
 
 Keep one PR when changes share a contract and splitting would create a broken intermediate state.
-

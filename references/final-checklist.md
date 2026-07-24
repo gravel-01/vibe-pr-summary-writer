@@ -11,6 +11,8 @@
 - Does the commit section contain proposed messages only, without invented hashes?
 - Are unresolved assumptions labeled `To confirm` or `待确认`?
 - Are public APIs, abstractions, templates, or extension points accompanied by an example?
+- If the change has a complex cross-component flow, was a useful Mermaid diagram considered rather than added mechanically?
+- If a diagram is included, does it distinguish implemented behavior from planned or excluded behavior?
 - Are persistence and frontend/usage entry points explained when relevant?
 - Are verification plans and non-goals present?
 - Does the draft avoid implying that planned work has already passed?
@@ -31,6 +33,7 @@
 - Are stacked PR or old-commit relationships explained?
 - Are screenshots absent from commit scope unless intentionally included?
 - Are secrets and private data removed from text, logs, SQL, examples, and screenshots?
+- Does every Mermaid node and edge match final code or verified runtime evidence, and was rendering checked when tooling allowed it?
 - Is the description readable within roughly 2-3 minutes, with long evidence moved to optional sections?
 
 ## Final Integrity Questions

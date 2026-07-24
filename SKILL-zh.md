@@ -127,6 +127,8 @@ git diff --check <merge-base>..HEAD
 
 如果 PR 新增公共 API、配置、模板机制、抽象、workflow、数据结构或扩展点，读取 [references/examples.md](references/examples.md)。
 
+如果新增或修改的功能跨越多个组件、阶段、状态、异步步骤、fallback 或 Agent handoff，读取 [references/mermaid-diagrams.md](references/mermaid-diagrams.md)。只有 Mermaid 能明显降低 reviewer 理解成本时才加入简洁图示；不要每个 PR 都画，也不要把 Mermaid 塞进 Git commit message。
+
 Example 必须说明：
 
 1. 什么时候使用？
